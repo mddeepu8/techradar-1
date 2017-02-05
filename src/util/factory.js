@@ -18,11 +18,94 @@ const SheetNotFoundError = require('../exceptions/sheetNotFoundError');
 const ContentValidator = require('./contentValidator');
 const Sheet = require('./sheet');
 const ExceptionMessages = require('./exceptionMessages');
-
-
+const DataJSON = require('../models/data');
+const dataUrl = "https://api.myjson.com/bins/kw6y9";
+require('whatwg-fetch')
 const GoogleSheet = function (sheetReference, sheetName) {
     var self = {};
 
+    self.buildFromJSONURL = function (url) {
+        fetch(url)
+            .then(function(response) {
+                return response.json()
+            }).then(function(data) {
+                self.renderRadar(data);        
+                console.log('parsed json', data)
+            }).catch(function(ex) {
+                self.displayErrorMessage(ex)
+                console.log('parsing failed', ex)
+            })
+        
+    }
+
+    self.buildFromJSON = function (data) {
+        self.renderRadar(data);        
+    }
+
+    self.displayErrorMessage = function (exception) {
+        d3.selectAll(".loading").remove();
+        var message = 'Oops! It seems like there are some problems with loading your data. ';
+
+        if (exception instanceof MalformedDataError) {
+            message = message.concat(exception.message);
+        } else if (exception instanceof SheetNotFoundError) {
+            message = exception.message;
+        } else {
+            console.error(exception);
+        }
+
+        message = message.concat('<br/>', 'Please check <a href="https://info.thoughtworks.com/visualize-your-tech-strategy-guide.html#faq">FAQs</a> for possible solutions.');
+
+        d3.select('body')
+            .append('div')
+            .attr('class', 'error-container')
+            .append('div')
+            .attr('class', 'error-container__message')
+            .append('p')
+            .html(message);
+        
+        return self;
+    }
+
+    self.renderRadar = function (data) {
+        try {
+            var blips = _.map(data, new InputSanitizer().sanitize);
+
+            document.title = "Atlassian Tech Radar";
+            d3.selectAll(".loading").remove();
+
+            var rings = _.map(_.uniqBy(blips, 'ring'), 'ring');
+            var ringMap = {};
+            var maxRings = 4;
+
+            _.each(rings, function (ringName, i) {
+                if (i == maxRings) {
+                    throw new MalformedDataError(ExceptionMessages.TOO_MANY_RINGS);
+                }
+                ringMap[ringName] = new Ring(ringName, i);
+            });
+
+            var quadrants = {};
+            _.each(blips, function (blip) {
+                if (!quadrants[blip.quadrant]) {
+                    quadrants[blip.quadrant] = new Quadrant(_.capitalize(blip.quadrant));
+                }
+                quadrants[blip.quadrant].add(new Blip(blip.name, ringMap[blip.ring], blip.isNew.toLowerCase() === 'true', blip.topic, blip.description))
+            });
+
+            var radar = new Radar();
+            _.each(quadrants, function (quadrant) {
+                radar.addQuadrant(quadrant)
+            });
+
+            var size = (window.innerHeight - 133) < 620 ? 620 : window.innerHeight - 133;
+
+            new GraphingRadar(size, radar).init().plot();
+
+        } catch (exception) {
+            self.displayErrorMessage(exception);
+        }
+    }
     self.build = function () {
         var sheet = new Sheet(sheetReference);
         sheet.exists(function(notFound) {
@@ -36,29 +119,6 @@ const GoogleSheet = function (sheetReference, sheetName) {
                 callback: createRadar
             });
         });
-
-        function displayErrorMessage(exception) {
-            d3.selectAll(".loading").remove();
-            var message = 'Oops! It seems like there are some problems with loading your data. ';
-
-            if (exception instanceof MalformedDataError) {
-                message = message.concat(exception.message);
-            } else if (exception instanceof SheetNotFoundError) {
-                message = exception.message;
-            } else {
-                console.error(exception);
-            }
-
-            message = message.concat('<br/>', 'Please check <a href="https://info.thoughtworks.com/visualize-your-tech-strategy-guide.html#faq">FAQs</a> for possible solutions.');
-
-            d3.select('body')
-                .append('div')
-                .attr('class', 'error-container')
-                .append('div')
-                .attr('class', 'error-container__message')
-                .append('p')
-                .html(message);
-        }
 
         function createRadar(__, tabletop) {
 
@@ -108,7 +168,7 @@ const GoogleSheet = function (sheetReference, sheetName) {
                 new GraphingRadar(size, radar).init().plot();
 
             } catch (exception) {
-                displayErrorMessage(exception);
+                self.displayErrorMessage(exception);
             }
         }
     };
@@ -156,7 +216,19 @@ const GoogleSheetInput = function () {
 
     self.build = function () {
         var queryParams = QueryParams(window.location.search.substring(1));
-
+        if (queryParams.dataUrl) {
+            var sheet = GoogleSheet(queryParams.sheetId, queryParams.sheetName);
+            sheet.init().buildFromJSONURL(queryParams.dataUrl);
+        } else 
+        if (dataUrl) {
+            var sheet = GoogleSheet(queryParams.sheetId, queryParams.sheetName);
+            sheet.init().buildFromJSONURL(dataUrl);
+        } else 
+        if (DataJSON) {
+            var sheet = GoogleSheet(queryParams.sheetId, queryParams.sheetName);
+            var data = DataJSON();
+            sheet.init().buildFromJSON(data);
+        } else 
         if (queryParams.sheetId) {
             var sheet = GoogleSheet(queryParams.sheetId, queryParams.sheetName);
             sheet.init().build();
