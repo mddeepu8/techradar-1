@@ -18,8 +18,7 @@ const SheetNotFoundError = require('../exceptions/sheetNotFoundError');
 const ContentValidator = require('./contentValidator');
 const Sheet = require('./sheet');
 const ExceptionMessages = require('./exceptionMessages');
-const DataJSON = require('../models/data');
-const dataUrl = "https://api.myjson.com/bins/kw6y9";
+// const DataJSON = require('../models/data');
 require('whatwg-fetch')
 const GoogleSheet = function (sheetReference, sheetName) {
     var self = {};
@@ -220,15 +219,15 @@ const GoogleSheetInput = function () {
             var sheet = GoogleSheet(queryParams.sheetId, queryParams.sheetName);
             sheet.init().buildFromJSONURL(queryParams.dataUrl);
         } else 
-        if (dataUrl) {
+        /* if (dataUrl) {
             var sheet = GoogleSheet(queryParams.sheetId, queryParams.sheetName);
-            sheet.init().buildFromJSONURL(dataUrl);
+            sheet.init().buildFromJSONURL("https://api.myjson.com/bins/kw6y9");
         } else 
         if (DataJSON) {
             var sheet = GoogleSheet(queryParams.sheetId, queryParams.sheetName);
             var data = DataJSON();
             sheet.init().buildFromJSON(data);
-        } else 
+        } else */
         if (queryParams.sheetId) {
             var sheet = GoogleSheet(queryParams.sheetId, queryParams.sheetName);
             sheet.init().build();
