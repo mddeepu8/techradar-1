@@ -15,10 +15,46 @@ There are a few ways provide data to the radar
 3. You can set the dataUrl query parameter to render radar at launch and use json data served from a url
 * Example : http://localhost:8080?dataUrl=https://api.myjson.com/bins/kw6y9
 4. If you have set the variable window.LOCAL_DATA_URL radar will use that to render data at launch
+5. If you have set the variable window.LOCAL_DATA radar will use that object to render data at launch
 
+### Setting up your data as JSON
+The structure of the object should be as mentioned in `index.html`
+The Json returned should be following the below schema
+```javascript
+      {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "ring": {
+              "type": "string"
+            },
+            "quadrant": {
+              "type": "string"
+            },
+            "isnew": {
+              "type": "boolean"
+            },
+            "description": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "ring",
+            "quadrant",
+            "isnew",
+            "description"
+          ]
+        }
+      } 
+```
 
-
-### Setting up your data
+### Setting up your data in spreadsheet
 
 You need to make your data public in a form we can digest.
 
