@@ -18,7 +18,6 @@ const SheetNotFoundError = require('../exceptions/sheetNotFoundError');
 const ContentValidator = require('./contentValidator');
 const Sheet = require('./sheet');
 const ExceptionMessages = require('./exceptionMessages');
-// const DataJSON = require('../models/data');
 require('whatwg-fetch')
 const GoogleSheet = function (sheetReference, sheetName) {
     var self = {};
@@ -216,22 +215,22 @@ const GoogleSheetInput = function () {
     self.build = function () {
         var queryParams = QueryParams(window.location.search.substring(1));
         if (queryParams.dataUrl) {
-            var sheet = GoogleSheet(queryParams.sheetId, queryParams.sheetName);
+            var sheet = GoogleSheet();
             sheet.init().buildFromJSONURL(queryParams.dataUrl);
         } else 
-        /* if (dataUrl) {
-            var sheet = GoogleSheet(queryParams.sheetId, queryParams.sheetName);
-            sheet.init().buildFromJSONURL("https://api.myjson.com/bins/kw6y9");
-        } else 
-        if (DataJSON) {
-            var sheet = GoogleSheet(queryParams.sheetId, queryParams.sheetName);
-            var data = DataJSON();
-            sheet.init().buildFromJSON(data);
-        } else */
         if (queryParams.sheetId) {
             var sheet = GoogleSheet(queryParams.sheetId, queryParams.sheetName);
             sheet.init().build();
-        } else {
+        } else 
+        if (window.LOCAL_DATA_URL) {
+            var sheet = GoogleSheet();
+            sheet.init().buildFromJSONURL(window.LOCAL_DATA_URL);
+        } else 
+        if (window.LOCAL_DATA) {
+            var sheet = GoogleSheet();
+            sheet.init().buildFromJSON(window.LOCAL_DATA);
+        } else 
+        {
             var content = d3.select('body')
                 .append('div')
                 .attr('class', 'input-sheet');
@@ -248,7 +247,6 @@ const GoogleSheetInput = function () {
             plotForm(content);
 
             plotFooter(content);
-
         }
     };
 
