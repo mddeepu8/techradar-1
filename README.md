@@ -8,7 +8,15 @@ You can see this in action at https://radar.thoughtworks.com. If you plug in [th
 
 ## How To Use
 
-The easiest way to use the app out of the box is to provide a *public* Google Sheet ID from which all the data will be fetched. You can enter that ID into the input field on the first page of the application, and your radar will be generated. The data must conform to the format below for the radar to be generated correctly.
+There are a few ways provide data to the radar
+1. The easiest way to use the app out of the box is to provide a *public* Google Sheet ID from which all the data will be fetched. You can enter that ID into the input field on the first page of the application, and your radar will be generated. The data must conform to the format below for the radar to be generated correctly.
+2. You can set the sheetId query parameter to render radar at launch
+* Example : http://localhost:8080?sheetId=1waDG0_W3-yNiAaUfxcZhTKvl7AUCgXwQw8mdPjCz86U
+3. You can set the dataUrl query parameter to render radar at launch and use json data served from a url
+* Example : http://localhost:8080?dataUrl=https://api.myjson.com/bins/kw6y9
+4. If you have set the variable window.LOCAL_DATA_URL radar will use that to render data at launch
+
+
 
 ### Setting up your data
 
