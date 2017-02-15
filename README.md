@@ -13,7 +13,7 @@ There are a few ways to provide data to the radar
 #### Published google spreadsheet
 The easiest way to use the app out of the box is to provide a *public* Google Sheet ID from which all the data will be fetched. You can enter that ID into the input field on the first page of the application, and your radar will be generated. The data must conform to the format below for the radar to be generated correctly.
 * You can set the sheetId query parameter to render radar at launch
-* Example : http://localhost:8080?sheetId=1waDG0_W3-yNiAaUfxcZhTKvl7AUCgXwQw8mdPjCz86U
+* Example : https://soneymathew.github.io/techradar/?sheetId=1waDG0_W3-yNiAaUfxcZhTKvl7AUCgXwQw8mdPjCz86U
 
 #### JSON via url
 You can set the dataUrl query parameter to render radar at launch and use json data served from a url
