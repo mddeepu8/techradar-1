@@ -3,7 +3,7 @@
 const webpack = require('webpack');
 const path = require('path');
 const args = require('yargs').argv;
-const buildPath = path.join(__dirname, args.prod ? './prod' : './dist');
+const buildPath = path.join(__dirname, args.prod ? './docs' : './dist');
 
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -49,7 +49,7 @@ module.exports = {
 
     output: {
         path: buildPath,
-        publicPath: '/',
+        publicPath: '',
         filename: '[name].[hash].js'
     },
 
