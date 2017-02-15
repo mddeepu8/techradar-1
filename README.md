@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/soneymathew/techradar.svg?branch=master)](https://travis-ci.org/soneymathew/techradar)
 
-A library that generates an interactive radar, inspired by [thoughtworks.com/radar](http://thoughtworks.com/radar).
+A library that generates an interactive radar that is tailored to satisfy the need of keeping the radar data private, inspired by [thoughtworks.com/radar](http://thoughtworks.com/radar).
 
 ## Demo
 
@@ -8,7 +8,7 @@ You can see this in action at https://radar.thoughtworks.com. If you plug in [th
 
 ## How To Use
 
-There are a few ways provide data to the radar
+There are a few ways to provide data to the radar
 
 #### Published google spreadsheet
 The easiest way to use the app out of the box is to provide a *public* Google Sheet ID from which all the data will be fetched. You can enter that ID into the input field on the first page of the application, and your radar will be generated. The data must conform to the format below for the radar to be generated correctly.
