@@ -4,7 +4,7 @@ A library that generates an interactive radar that is tailored to satisfy the ne
 
 ## Demo
 
-You can see this in action at https://radar.thoughtworks.com. If you plug in [this data](https://docs.google.com/spreadsheets/d/1YXkrgV7Y6zShiPeyw4Y5_19QOfu5I6CyH5sGnbkEyiI/) you'll see [this visualization](https://soneymathew.github.io/techradar/?sheetId=1YXkrgV7Y6zShiPeyw4Y5_19QOfu5I6CyH5sGnbkEyiI). 
+If you plug in [this data](https://docs.google.com/spreadsheets/d/1YXkrgV7Y6zShiPeyw4Y5_19QOfu5I6CyH5sGnbkEyiI/) you'll see [this visualization](https://soneymathew.github.io/techradar/?sheetId=1YXkrgV7Y6zShiPeyw4Y5_19QOfu5I6CyH5sGnbkEyiI). 
 
 ## How To Use
 
@@ -12,7 +12,9 @@ There are a few ways to provide data to the radar
 
 #### Published google spreadsheet
 The easiest way to use the app out of the box is to provide a *public* Google Sheet ID from which all the data will be fetched. You can enter that ID into the input field on the first page of the application, and your radar will be generated. The data must conform to the format below for the radar to be generated correctly.
-* You can set the sheetId query parameter to render radar at launch
+
+#### google doc `sheetId` via url
+You can set the sheetId query parameter to render radar at launch
 * Example : https://soneymathew.github.io/techradar/?sheetId=1waDG0_W3-yNiAaUfxcZhTKvl7AUCgXwQw8mdPjCz86U
 
 #### JSON via url
