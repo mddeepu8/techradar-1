@@ -4,7 +4,7 @@ A library that generates an interactive radar that is tailored to satisfy the ne
 
 ## Demo
 
-If you plug in [this data](https://docs.google.com/spreadsheets/d/1YXkrgV7Y6zShiPeyw4Y5_19QOfu5I6CyH5sGnbkEyiI/) you'll see [this visualization](https://soneymathew.github.io/techradar/?sheetId=1YXkrgV7Y6zShiPeyw4Y5_19QOfu5I6CyH5sGnbkEyiI). 
+If you plug in [this data](https://docs.google.com/spreadsheets/d/1YXkrgV7Y6zShiPeyw4Y5_19QOfu5I6CyH5sGnbkEyiI/) you'll see [this visualization](https://atlassian.github.io/techradar/?sheetId=1YXkrgV7Y6zShiPeyw4Y5_19QOfu5I6CyH5sGnbkEyiI). 
 
 ## How To Use
 
@@ -15,11 +15,11 @@ The easiest way to use the app out of the box is to provide a *public* Google Sh
 
 #### google doc `sheetId` via url
 You can set the sheetId query parameter to render radar at launch
-* Example : https://soneymathew.github.io/techradar/?sheetId=1waDG0_W3-yNiAaUfxcZhTKvl7AUCgXwQw8mdPjCz86U
+* Example : https://atlassian.github.io/techradar/?sheetId=1waDG0_W3-yNiAaUfxcZhTKvl7AUCgXwQw8mdPjCz86U
 
 #### JSON via url
 You can set the dataUrl query parameter to render radar at launch and use json data served from a url
-* Example : https://soneymathew.github.io/techradar/?dataUrl=https://api.myjson.com/bins/kw6y9
+* Example : https://atlassian.github.io/techradar/?dataUrl=https://api.myjson.com/bins/kw6y9
 
 #### JSON via url specified in a global variable
 * If you have set the variable window.LOCAL_DATA_URL radar will use that to render data at launch
